@@ -1,4 +1,4 @@
-namespace ElectronicComponentsWarehouse
+namespace Warehouse
 {
     public class WeatherForecast
     {
