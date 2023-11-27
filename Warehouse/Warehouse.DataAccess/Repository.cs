@@ -13,24 +13,24 @@ public class Repository<T> : IRepository<T> where T : EntityBase
         _context = context;
         _entities = _context.Set<T>();
     }
-    public void Delete(int id)
+    public async Task Delete(int id)
     {
-        T entity = _entities.SingleOrDefault(x => x.Id == id);
+        T entity = await _entities.SingleOrDefaultAsync(x => x.Id == id);
         _entities.Remove(entity);
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
-    public IEnumerable<T> GetAll()
+    public Task<List<T>> GetAll()
     {
-        return _entities.AsEnumerable();
+        return _entities.ToListAsync();
     }
 
-    public T GetById(int id)
+    public Task<T> GetById(int id)
     {
-        return _entities.SingleOrDefault(x => x.Id == id);
+        return _entities.SingleOrDefaultAsync(x => x.Id == id);
     }
 
-    public void Insert(T entity)
+    public Task Insert(T entity)
     {
         if(entity == null)
         {
@@ -38,16 +38,16 @@ public class Repository<T> : IRepository<T> where T : EntityBase
         }
         
         _entities.Add(entity);
-        _context.SaveChanges();
+        return _context.SaveChangesAsync();
     }
 
-    public void Update(T entity)
+    public Task Update(T entity)
     {
         if (entity == null)
         {
             throw new ArgumentNullException("entity");
         }
 
-        _context.SaveChanges();
+        return _context.SaveChangesAsync();
     }
 }

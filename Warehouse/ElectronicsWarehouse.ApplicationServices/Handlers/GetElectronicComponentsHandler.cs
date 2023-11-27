@@ -2,27 +2,29 @@
 using ElectronicsWarehouse.ApplicationServices.API.Domain;
 using MediatR;
 using Warehouse.DataAccess;
+using Warehouse.DataAccess.CQRS.Queries;
 
 namespace ElectronicsWarehouse.ApplicationServices.Handlers;
 
 public class GetElectronicComponentsHandler : IRequestHandler<GetElectronicComonentRequest, GetElectronicComonentResponse>
 {
-    private readonly IRepository<Warehouse.DataAccess.Entities.ElectronicComponent> _electronicComponentRepository;
     private readonly IMapper _mapper;
+    private readonly IQueryExecutor _queryExecutor;
 
-    public GetElectronicComponentsHandler(IRepository<Warehouse.DataAccess.Entities.ElectronicComponent> electronicComponentRepository, IMapper mapper)
+    public GetElectronicComponentsHandler(IMapper mapper, IQueryExecutor queryExecutor)
     {
-        _electronicComponentRepository = electronicComponentRepository;
         _mapper = mapper;
+        _queryExecutor = queryExecutor;
     }
-    public Task<GetElectronicComonentResponse> Handle(GetElectronicComonentRequest request, CancellationToken cancellationToken)
+    public async Task<GetElectronicComonentResponse> Handle(GetElectronicComonentRequest request, CancellationToken cancellationToken)
     {
-        var electronicComponent = _electronicComponentRepository.GetAll();
-        var mappedElectronicComponent = _mapper.Map<List<API.Domain.Models.ElectronicComponent>>(electronicComponent);
+        var query = new GetElectronicComponentsQuery();
+        var electronicComponents = await _queryExecutor.Execute(query);
+        var mappedElectronicComponent = _mapper.Map<List<API.Domain.Models.ElectronicComponent>>(electronicComponents);
         var response = new GetElectronicComonentResponse()
         {
             Data = mappedElectronicComponent
         };
-        return Task.FromResult(response);
+        return response;
     }
 }

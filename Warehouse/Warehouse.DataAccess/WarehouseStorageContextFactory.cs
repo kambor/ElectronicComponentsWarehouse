@@ -8,7 +8,8 @@ public class WarehouseStorageContextFactory : IDesignTimeDbContextFactory<Wareho
     public WarehouseStorageContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<WarehouseStorageContext>();
-        optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=WarehouseStorage;Integrated Security=True;TrustServerCertificate=True");
+        optionsBuilder.UseSqlServer("Data Source=.\\SQLEXPRESS;Initial Catalog=WarehouseStorage;Integrated Security=True;Trust Server Certificate=True");
+        //Data Source=.\SQLEXPRESS;Initial Catalog=WarehouseStorage;Integrated Security=True;Trust Server Certificate=True
         return new WarehouseStorageContext(optionsBuilder.Options);
     }
 }

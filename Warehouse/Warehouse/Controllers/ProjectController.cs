@@ -15,12 +15,12 @@ namespace Warehouse.Controllers
             _projectRepository = projectRepository;
         }
 
-        [HttpGet]
-        [Route("")]
-        public IEnumerable<Project> GetAllProjects() => _projectRepository.GetAll();
+        //[HttpGet]
+        //[Route("")]
+        //public IEnumerable<Project> GetAllProjects() => _projectRepository.GetAll();
 
-        [HttpGet]
-        [Route("{projectId}")]
-        public Project GetProjectById(int projectId) => _projectRepository.GetById(projectId);
+        //[HttpGet]
+        //[Route("{projectId}")]
+        //public Project GetProjectById(int projectId) => _projectRepository.GetById(projectId);
     }
 }

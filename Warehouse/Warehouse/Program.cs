@@ -2,10 +2,16 @@ using ElectronicsWarehouse.ApplicationServices.API.Domain;
 using ElectronicsWarehouse.ApplicationServices.Mappings;
 using Microsoft.EntityFrameworkCore;
 using Warehouse.DataAccess;
+using Warehouse.DataAccess.CQRS;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+//AddTransient za ka¿dym razem kiedy jest wstrzykiwane tworzona jest nowa instancja
+builder.Services.AddTransient<IQueryExecutor, QueryExecutor>();
+builder.Services.AddTransient<ICommandExexutor, CommandExexutor>();
+
+
 builder.Services.AddAutoMapper(typeof(ElectronicComponentsProfile).Assembly);
 
 builder.Services.AddMediatR(cfg =>
