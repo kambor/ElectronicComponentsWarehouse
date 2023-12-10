@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ElectronicsWarehouse.ApplicationServices.API.Domain.Requests.Projects;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Warehouse.DataAccess;
 using Warehouse.DataAccess.Entities;
 
@@ -8,19 +10,52 @@ namespace Warehouse.Controllers
     [Route("[controller]")]
     public class ProjectController : ControllerBase
     {
-        private readonly IRepository<Project> _projectRepository;
+        private readonly IMediator _mediator;
 
-        public ProjectController(IRepository<Project> projectRepository)
+        public ProjectController(IMediator mediator)
         {
-            _projectRepository = projectRepository;
+            _mediator = mediator;
         }
 
-        //[HttpGet]
-        //[Route("")]
-        //public IEnumerable<Project> GetAllProjects() => _projectRepository.GetAll();
+        [HttpGet]
+        [Route("{projectId}")]
+        public async Task<IActionResult> GetProjectById([FromRoute] int projectId)
+        {
+            var request = new GetProjectByIdRequest()
+            {
+                ProjectId = projectId
+            };
+            var response = await _mediator.Send(request);
+            return this.Ok(response);
+        }
 
-        //[HttpGet]
-        //[Route("{projectId}")]
-        //public Project GetProjectById(int projectId) => _projectRepository.GetById(projectId);
+        [HttpPost]
+        [Route("")]
+        public async Task<IActionResult> AddProject([FromBody] AddProjectRequest request)
+        {
+            var response = await _mediator.Send(request);
+            return this.Ok(response);
+        }
+
+        [HttpDelete]
+        [Route("{projectId}")]
+        public async Task<IActionResult> DeleteProjectById([FromRoute] int projectId)
+        {
+            var request = new DeleteProjectByIdRequest()
+            {
+                ProjectId = projectId
+            };
+            var response = await _mediator.Send(request);
+            return this.Ok(response);
+        }
+
+        [HttpPut]
+        [Route("{projectId}")]
+        public async Task<IActionResult> UpdateProjectById([FromRoute] int projectId, [FromBody] UpdateProjectByIdRequest request)
+        {
+            request.ProjectId = projectId;
+            var response = await _mediator.Send(request);
+            return this.Ok(response);
+        }
     }
 }

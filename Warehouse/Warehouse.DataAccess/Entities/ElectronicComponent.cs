@@ -5,6 +5,7 @@ namespace Warehouse.DataAccess.Entities;
 public class ElectronicComponent : EntityBase
 {
     public List<Project> Projects { get; set; }
+
     public List<ShoppingList> ShoppingLists { get; set; }
 
     [Required]
@@ -22,6 +23,9 @@ public class ElectronicComponent : EntityBase
     public Category? Category { get; set; }
 
     public double? Value { get; set; }
+
+    [MaxLength(20)]
+    public string? Unit { get; set; }
 
     public int? AvailableQuantity { get; set; }
 

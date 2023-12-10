@@ -2,11 +2,12 @@
 
 namespace Warehouse.DataAccess.CQRS.Commands;
 
-public class AddElectronicComponentCommand : CommandBase<Project, Project>
+public class UpdateProjectCommand : CommandBase<Project, Project>
 {
     public override async Task<Project> Execute(WarehouseStorageContext context)
     {
-        await context.Projects.AddAsync(this.Parameter);
+        context.ChangeTracker.Clear();
+        context.Projects.Update(this.Parameter);
         await context.SaveChangesAsync();
         return this.Parameter;
     }
