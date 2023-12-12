@@ -4,6 +4,9 @@ using Warehouse.DataAccess.CQRS.Queries;
 using Warehouse.DataAccess;
 using ElectronicsWarehouse.ApplicationServices.API.Domain.Requests.ElectronicComponents;
 using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses.ElectronicComponents;
+using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses.Projects;
+using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses;
+using ElectronicsWarehouse.ApplicationServices.API.ErrorHandling;
 
 namespace ElectronicsWarehouse.ApplicationServices.Handlers.ElectronicComponents;
 
@@ -24,12 +27,20 @@ public class GetElectronicComponentByIdHandler : IRequestHandler<GetElectronicCo
             Id = request.ElectronicComponentId
         };
         var electronicComponent = await _queryExecutor.Execute(query);
+
+        if (electronicComponent == null)
+        {
+            return new GetElectronicComponentByIdResponse()
+            {
+                Error = new ErrorModel(ErrorType.NotFound)
+            };
+        }
+
         var mappedElectronicComponent = _mapper.Map<API.Domain.Models.ElectronicComponent>(electronicComponent);
-        var response = new GetElectronicComponentByIdResponse()
+        return new GetElectronicComponentByIdResponse()
         {
             Data = mappedElectronicComponent
         };
-        return response;
     }
 }
 

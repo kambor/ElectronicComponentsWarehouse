@@ -28,6 +28,7 @@ public class ProjectProfile : Profile
 
         this.CreateMap<Project, API.Domain.Models.Project>()
             .ForMember(x => x.Id, y => y.MapFrom(z => z.Id))
-            .ForMember(x => x.Name, y => y.MapFrom(z => z.Name));
+            .ForMember(x => x.Name, y => y.MapFrom(z => z.Name))
+            .ForMember(x => x.ElectronicComponentsName, y => y.MapFrom(z => z.ElectronicComponents != null ? z.ElectronicComponents.Select(x => x.Name) : new List<string>()));
     }
 }

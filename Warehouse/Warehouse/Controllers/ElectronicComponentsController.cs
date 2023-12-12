@@ -1,4 +1,7 @@
 ﻿using ElectronicsWarehouse.ApplicationServices.API.Domain.Requests.ElectronicComponents;
+using ElectronicsWarehouse.ApplicationServices.API.Domain.Requests.Projects;
+using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses.ElectronicComponents;
+using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses.Projects;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,34 +9,30 @@ namespace ElectronicsWarehouse.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ElectronicComponentsController : ControllerBase
+public class ElectronicComponentsController : ApiControllerBase
 {
-    private readonly IMediator _mediator;
+   
 
-    public ElectronicComponentsController(IMediator mediator)
+    public ElectronicComponentsController(IMediator mediator) : base(mediator)
     {
-        _mediator = mediator;
     }
 
     [HttpGet]
     [Route("")]
-    public async Task<IActionResult> GetAllElectronicComponents([FromQuery] GetElectronicComponentsRequest request)
+    public Task<IActionResult> GetAllElectronicComponents([FromQuery] GetElectronicComponentsRequest request)
     {
-        var response = await _mediator.Send(request);
-        return this.Ok(response);
+        return this.HandleRequest<GetElectronicComponentsRequest, GetElectronicComponentsResponse>(request);
     }
 
     [HttpGet]
     [Route("{electronicComponentId}")]
-    public async Task<IActionResult> GetById([FromRoute] int electronicComponentId)
+    public Task<IActionResult> GetById([FromRoute] int electronicComponentId)
     {
         var request = new GetElectronicComponentByIdRequest()
         {
             ElectronicComponentId = electronicComponentId
         };
-
-        var response = await _mediator.Send(request);
-        return this.Ok(response);
+        return this.HandleRequest<GetElectronicComponentByIdRequest, GetElectronicComponentByIdResponse>(request);
     }
 
 }

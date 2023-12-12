@@ -7,6 +7,8 @@ using Warehouse.DataAccess.CQRS;
 using Warehouse.DataAccess;
 using Warehouse.DataAccess.CQRS.Queries.Projects;
 using Warehouse.DataAccess.CQRS.Commands;
+using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses;
+using ElectronicsWarehouse.ApplicationServices.API.ErrorHandling;
 
 namespace ElectronicsWarehouse.ApplicationServices.Handlers.Projects;
 
@@ -29,6 +31,14 @@ public class UpdateProjectHandler : IRequestHandler<UpdateProjectByIdRequest, Up
             Id = request.ProjectId
         };
         var getProject = await _queryExecutor.Execute(query);
+
+        if (getProject == null)
+        {
+            return new UpdateProjectByIdResponse()
+            {
+                Error = new ErrorModel(ErrorType.NotFound)
+            };
+        }
 
         var mappedCommand = _mapper.Map<Warehouse.DataAccess.Entities.Project>(request);
 

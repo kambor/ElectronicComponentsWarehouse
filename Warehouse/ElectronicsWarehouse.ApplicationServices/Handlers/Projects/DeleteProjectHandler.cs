@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using ElectronicsWarehouse.ApplicationServices.API.Domain.Models;
 using ElectronicsWarehouse.ApplicationServices.API.Domain.Requests.Projects;
+using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses;
 using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses.ElectronicComponents;
 using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses.Projects;
+using ElectronicsWarehouse.ApplicationServices.API.ErrorHandling;
 using MediatR;
 using Warehouse.DataAccess;
 using Warehouse.DataAccess.CQRS;
@@ -31,6 +33,14 @@ public class DeleteProjectHandler : IRequestHandler<DeleteProjectByIdRequest, De
             Id = request.ProjectId
         };
         var getProject = await _queryExecutor.Execute(query);
+
+        if (getProject == null)
+        {
+            return new DeleteProjectByIdResponse()
+            {
+                Error = new ErrorModel(ErrorType.NotFound)
+            };
+        }
 
         var mappedCommand = _mapper.Map<Warehouse.DataAccess.Entities.Project>(request);
 
