@@ -3,10 +3,12 @@ using ElectronicsWarehouse.ApplicationServices.API.Domain.Requests.Projects;
 using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses.ElectronicComponents;
 using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses.Projects;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ElectronicsWarehouse.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class ElectronicComponentsController : ApiControllerBase

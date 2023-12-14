@@ -3,6 +3,7 @@ using ElectronicsWarehouse.ApplicationServices.API.ErrorHandling;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Security.Claims;
 
 namespace ElectronicsWarehouse.Controllers;
 
@@ -25,6 +26,10 @@ public abstract class ApiControllerBase : ControllerBase
                 .Where(x => x.Value.Errors.Any())
                 .Select(x => new { property = x.Key, errors = x.Value.Errors}));
         }
+
+        //var userName = this.User.FindFirstValue(ClaimTypes.Name);
+        //TODOO uzupełnić request bazowy który przechowuje dane użytkownika 
+
 
         var response = await _mediator.Send(request);
         if(response.Error != null)

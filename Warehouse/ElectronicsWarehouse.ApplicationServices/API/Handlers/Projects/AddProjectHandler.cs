@@ -3,7 +3,7 @@ using ElectronicsWarehouse.ApplicationServices.API.Domain.Requests.Projects;
 using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses.Projects;
 using MediatR;
 using Warehouse.DataAccess.CQRS;
-using Warehouse.DataAccess.CQRS.Commands;
+using Warehouse.DataAccess.CQRS.Commands.Projects;
 using Warehouse.DataAccess.Entities;
 
 namespace ElectronicsWarehouse.ApplicationServices.Handlers.Projects;

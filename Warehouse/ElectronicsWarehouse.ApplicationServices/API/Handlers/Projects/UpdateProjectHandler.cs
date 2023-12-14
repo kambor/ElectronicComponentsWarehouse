@@ -6,7 +6,7 @@ using MediatR;
 using Warehouse.DataAccess.CQRS;
 using Warehouse.DataAccess;
 using Warehouse.DataAccess.CQRS.Queries.Projects;
-using Warehouse.DataAccess.CQRS.Commands;
+using Warehouse.DataAccess.CQRS.Commands.Projects;
 using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses;
 using ElectronicsWarehouse.ApplicationServices.API.ErrorHandling;
 

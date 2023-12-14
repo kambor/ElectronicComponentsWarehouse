@@ -1,14 +1,14 @@
 ﻿using Warehouse.DataAccess.Entities;
 
-namespace Warehouse.DataAccess.CQRS.Commands;
+namespace Warehouse.DataAccess.CQRS.Commands.Projects;
 
 public class UpdateProjectCommand : CommandBase<Project, Project>
 {
     public override async Task<Project> Execute(WarehouseStorageContext context)
     {
         context.ChangeTracker.Clear();
-        context.Projects.Update(this.Parameter);
+        context.Projects.Update(Parameter);
         await context.SaveChangesAsync();
-        return this.Parameter;
+        return Parameter;
     }
 }

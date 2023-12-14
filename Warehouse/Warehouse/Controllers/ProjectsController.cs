@@ -2,12 +2,14 @@
 using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses.Projects;
 using ElectronicsWarehouse.Controllers;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Warehouse.DataAccess;
 using Warehouse.DataAccess.Entities;
 
 namespace Warehouse.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ProjectsController : ApiControllerBase

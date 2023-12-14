@@ -1,5 +1,4 @@
 using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses;
-using ElectronicsWarehouse.ApplicationServices.API.Validators;
 using ElectronicsWarehouse.ApplicationServices.Mappings;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
@@ -7,9 +6,17 @@ using Microsoft.EntityFrameworkCore;
 using Warehouse.DataAccess;
 using Warehouse.DataAccess.CQRS;
 using NLog.Web;
+using Microsoft.AspNetCore.Authentication;
+using MagazynEdu.Authentication;
+using ElectronicsWarehouse.ApplicationServices.Components.Validators;
+using Autofac.Core;
+using ElectronicsWarehouse.ApplicationServices.Components.PasswordHasher;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddAuthentication("BasicAuthentication")
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
 builder.Host.UseNLog();
 
@@ -26,7 +33,7 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 //AddTransient za ka¿dym razem kiedy jest wstrzykiwane tworzona jest nowa instancja
 builder.Services.AddTransient<IQueryExecutor, QueryExecutor>();
 builder.Services.AddTransient<ICommandExexutor, CommandExexutor>();
-
+builder.Services.AddTransient<IPasswordHasher, PasswordHasher>();
 
 builder.Services.AddAutoMapper(typeof(ElectronicComponentsProfile).Assembly);
 
@@ -56,7 +63,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 
