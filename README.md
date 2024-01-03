@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## MyFilms
 
 This is repository for a web application built with `ASP.NET Core 8 Web API`.  includes instructions for setting up the development environment, running the application and managing database migrations with Entity Framework Core. It's a personal application to catch from external API movies and user has a possibility to use CRUD actions.
@@ -71,3 +72,6 @@ This results in a design that is:
 - Repository Pattern
 - Swagger UI
 - In-Memory Database for Integration Tests
+=======
+
+>>>>>>> e9cdd0e8014509ceb2ca84ccac10c18999b03544
