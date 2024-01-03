@@ -56,7 +56,7 @@ public class BasicAuthenticationHandler : AuthenticationHandler<AuthenticationSc
             var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
             var username = credentials[0];
 
-            var query = new GetUserQuery()
+            var query = new GetUserByUsernameQuery()
             {
                 Username = username
             };

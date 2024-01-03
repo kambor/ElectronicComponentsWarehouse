@@ -7,7 +7,7 @@ using Warehouse.DataAccess;
 using Warehouse.DataAccess.CQRS.Queries;
 using Warehouse.DataAccess.CQRS.Queries.Users;
 
-namespace ElectronicsWarehouse.ApplicationServices.Handlers.Users;
+namespace ElectronicsWarehouse.ApplicationServices.API.Handlers.Users;
 
 public class GetUsersHandler : IRequestHandler<GetUsersRequest, GetUsersResponse>
 {
@@ -23,7 +23,7 @@ public class GetUsersHandler : IRequestHandler<GetUsersRequest, GetUsersResponse
     {
         var query = new GetUsersQuery();
         var users = await _queryExecutor.Execute(query);
-        var mappedUsers = _mapper.Map<List<API.Domain.Models.User>>(users);
+        var mappedUsers = _mapper.Map<List<Domain.Models.User>>(users);
         var response = new GetUsersResponse()
         {
             Data = mappedUsers

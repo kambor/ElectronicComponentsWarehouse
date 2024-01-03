@@ -15,6 +15,20 @@ using ElectronicsWarehouse.ApplicationServices.Components.PasswordHasher;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//same-orgin policy
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder =>
+        {
+            builder
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        });
+});
+
+
 builder.Services.AddAuthentication("BasicAuthentication")
     .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
@@ -66,7 +80,7 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-
+app.UseCors();
 
 app.MapControllers();
 

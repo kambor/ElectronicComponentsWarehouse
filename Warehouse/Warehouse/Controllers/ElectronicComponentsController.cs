@@ -37,4 +37,31 @@ public class ElectronicComponentsController : ApiControllerBase
         return this.HandleRequest<GetElectronicComponentByIdRequest, GetElectronicComponentByIdResponse>(request);
     }
 
+    [HttpPost]
+    [Route("")]
+    public Task<IActionResult> AddElectronicComponent([FromBody] AddElectronicComponentRequest request)
+    {
+        return this.HandleRequest<AddElectronicComponentRequest, AddElectronicComponentResponse>(request);
+    }
+
+    [HttpDelete]
+    [Route("{electronicComponentId}")]
+    public Task<IActionResult> DeleteElectronicComponentById([FromRoute] int electronicComponentId)
+    {
+        var request = new DeleteElectronicComponentByIdRequest()
+        {
+            ElectronicComponentId = electronicComponentId
+        };
+
+        return this.HandleRequest<DeleteElectronicComponentByIdRequest, DeleteElectronicComponentByIdResponse>(request);
+    }
+
+    [HttpPut]
+    [Route("{electronicComponentId}")]
+    public Task<IActionResult> UpdateElectronicComponentById([FromRoute] int electronicComponentId, [FromBody] UpdateElectronicComponentByIRequest request)
+    {
+        request.ElectronicComponentId = electronicComponentId;
+        return this.HandleRequest<UpdateElectronicComponentByIRequest, UpdateElectronicComponentByIResponse>(request);
+    }
+
 }

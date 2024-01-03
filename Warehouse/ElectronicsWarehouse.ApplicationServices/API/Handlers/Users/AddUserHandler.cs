@@ -8,7 +8,7 @@ using Warehouse.DataAccess.CQRS;
 using Warehouse.DataAccess.CQRS.Commands.Users;
 using Warehouse.DataAccess.Entities;
 
-namespace ElectronicsWarehouse.ApplicationServices.Handlers.Users;
+namespace ElectronicsWarehouse.ApplicationServices.API.Handlers.Users;
 
 public class AddUserHandler : IRequestHandler<AddUserRequest, AddUserResponse>
 {
@@ -30,14 +30,14 @@ public class AddUserHandler : IRequestHandler<AddUserRequest, AddUserResponse>
         request.Salt = auth[1];
 
         var user = _mapper.Map<User>(request);
-        var command = new AddUserCommand() 
-        { 
-            Parameter = user 
+        var command = new AddUserCommand()
+        {
+            Parameter = user
         };
         var userFromDb = await _commandExexutor.Execute(command);
         return new AddUserResponse()
-        { 
-            Data = _mapper.Map<API.Domain.Models.User>(userFromDb)
-        };         
+        {
+            Data = _mapper.Map<Domain.Models.User>(userFromDb)
+        };
     }
 }

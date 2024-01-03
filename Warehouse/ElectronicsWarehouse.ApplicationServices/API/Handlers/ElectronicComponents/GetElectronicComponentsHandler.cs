@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper;
 using ElectronicsWarehouse.ApplicationServices.API.Domain.Requests.ElectronicComponents;
 using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses.ElectronicComponents;
 using MediatR;
@@ -20,17 +19,13 @@ public class GetElectronicComponentsHandler : IRequestHandler<GetElectronicCompo
     }
     public async Task<GetElectronicComponentsResponse> Handle(GetElectronicComponentsRequest request, CancellationToken cancellationToken)
     {
-        var query = new GetElectronicComponentsQuery()
-        {
-            Name = request.Name
-        };
+        var query = new GetElectronicComponentsQuery();
         var electronicComponents = await _queryExecutor.Execute(query);
         var mappedElectronicComponent = _mapper.Map<List<API.Domain.Models.ElectronicComponent>>(electronicComponents);
-        var response = new GetElectronicComponentsResponse()
+        return new GetElectronicComponentsResponse()
         {
             Data = mappedElectronicComponent
         };
-        return response;
     }
 }
 

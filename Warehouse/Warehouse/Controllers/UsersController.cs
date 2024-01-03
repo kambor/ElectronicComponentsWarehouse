@@ -23,13 +23,39 @@ namespace ElectronicsWarehouse.Controllers
         {         
             return this.HandleRequest<GetUsersRequest, GetUsersResponse>(request);
         }
-
-        [AllowAnonymous]
+   
         [HttpPost]
         [Route("")]
         public Task<IActionResult> AddUser([FromBody] AddUserRequest request)
         {
             return this.HandleRequest<AddUserRequest, AddUserResponse>(request);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("authenticate")]
+        public Task<IActionResult> Post([FromBody] ValidateUserRequest request)
+        {
+            return this.HandleRequest<ValidateUserRequest, ValidateUserResponse>(request);
+        }
+
+        [HttpDelete]
+        [Route("{userId}")]
+        public Task<IActionResult> DeleteUserById([FromRoute] int userId)
+        {
+            var request = new DeleteUserByIdRequest()
+            {
+                UserId = userId
+            };
+            return this.HandleRequest<DeleteUserByIdRequest, DeleteUserByIdResponse>(request);
+        }
+
+        [HttpPut]
+        [Route("{userId}")]
+        public Task<IActionResult> UpdateUserById([FromRoute] int userId, [FromBody] UpdateUserByIdRequest request)
+        {
+            request.UserId = userId;
+            return this.HandleRequest<UpdateUserByIdRequest, UpdateUserByIdResponse>(request);
         }
     }
 }

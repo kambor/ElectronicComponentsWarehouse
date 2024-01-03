@@ -1,4 +1,6 @@
-﻿using ElectronicsWarehouse.ApplicationServices.API.Domain.Requests.Projects;
+﻿using ElectronicsWarehouse.ApplicationServices.API.Domain.Requests.ElectronicComponents;
+using ElectronicsWarehouse.ApplicationServices.API.Domain.Requests.Projects;
+using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses.ElectronicComponents;
 using ElectronicsWarehouse.ApplicationServices.API.Domain.Responses.Projects;
 using ElectronicsWarehouse.Controllers;
 using MediatR;
@@ -29,6 +31,13 @@ namespace Warehouse.Controllers
             };
 
             return this.HandleRequest<GetProjectByIdRequest, GetProjectByIdResponse>(request);
+        }
+
+        [HttpGet]
+        [Route("")]
+        public Task<IActionResult> GetProjects([FromQuery] GetProjectsRequest request)
+        {
+            return this.HandleRequest<GetProjectsRequest, GetProjectsResponse>(request);
         }
 
         [HttpPost]
